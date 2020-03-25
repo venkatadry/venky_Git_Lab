@@ -133,3 +133,21 @@ Worksheets("Consolidated_Won_Details").Move After:=Worksheets(Worksheets.Count)
 End If
 End Sub
 
+
+
+
+Assuming your tables start with headers in respective sheets, you can simply enter following SUMIFS function in "B2" and copy it down
+
+=SUMIFS(Sheet2!C:C,Sheet2!A:A,Sheet1!A2,Sheet2!B:B,"<>Nonbillable")
+
+But since you are asking VBA ..
+
+Sub Macro2()
+
+    Sheets("Sheet1").Range("B2:B4").FormulaR1C1 = _
+        "=SUMIFS(Sheet2!C3:C3,Sheet2!C1:C1,RC[-1],Sheet2!C2:C2,""<>Nonbillable"")"
+    Worksheets("Sheet1").Calculate
+    'you can add the following line to convert the formula to value
+    Sheets("Sheet1").Range("B2:B4").Value = Sheets("Sheet1").Range("B2:B4").Value
+
+End Sub
